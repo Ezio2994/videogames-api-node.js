@@ -36,24 +36,19 @@ const queryGames = async (query) => {
     allowedQueries.forEach(currentQuery => {
         if (query.hasOwnProperty(currentQuery)) {
             const q = query[currentQuery].split(" ");
-            const prova = q.map((q) => {
-                if (q !== "of" && q !== "the") {
+            const filteredQuery = q.map((q) => {
+                if (q !== "of") {
                     return q[0].toUpperCase() + q.substring(1)
                 } else {
                     return q
                 }
             }).join(" ");
-            console.log(prova);
-            firestoreQuery = firestoreQuery.where(currentQuery, '>=', prova)
-            // collectionRef.where('name', '>=', queryText).where('name', '<=', queryText+ '\uf8ff').
-            console.log(currentQuery);
-            console.log(prova);
+            firestoreQuery = firestoreQuery.where(currentQuery, '>=', filteredQuery)
         }
     })
 
 
     let checkingQuery = Object.keys(query)
-    // console.log(checkingQuery);
     checkingQuery = checkingQuery.filter(val => !allowedQueries.includes(val));
 
 
